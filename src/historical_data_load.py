@@ -8,6 +8,7 @@ from get_info_poc import *
 
 logging.basicConfig(level=logging.INFO)
 
+# Parametros de conexion
 host = get_parameter_poc(parameter_name="db-host")
 user, password = get_secret_poc(secret_name="POC_DB_Credentials")
 database = 'poc'
@@ -60,17 +61,17 @@ def cargar_datos_historicos():
         '''LOAD DATA LOCAL INFILE '../data/historicos/jobs.csv'
             INTO TABLE poc.jobs
             FIELDS TERMINATED BY ',' 
-            LINES TERMINATED BY '\n'
+            LINES TERMINATED BY '\r\n'
         ''',
         '''LOAD DATA LOCAL INFILE '../data/historicos/departments.csv'
             INTO TABLE poc.departments
             FIELDS TERMINATED BY ',' 
-            LINES TERMINATED BY '\n'
+            LINES TERMINATED BY '\r\n'
         ''',
         '''LOAD DATA LOCAL INFILE '../data/historicos/hired_employees.csv'
             INTO TABLE poc.hired_employees
             FIELDS TERMINATED BY ',' 
-            LINES TERMINATED BY '\n'
+            LINES TERMINATED BY '\r\n'
         '''
     ]
     return consultas_carga_historica
