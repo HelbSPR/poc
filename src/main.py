@@ -58,17 +58,11 @@ async def agregar_empleados(request: RegistrosRequest, db: Session = Depends(get
             if not dep_check or not job_check:
                 raise ValueError(f"Id del departamento {registro.department_id} or Id del job {registro.job_id} no validos")
             
-            try:
-                hire_dt = datetime.strptime(registro.hire_datetime, "%Y-%m-%d %H:%M:%S")
-            except ValueError:
-                raise ValueError(f"Fecha no valida para hire_datetime: {registro.hire_datetime}")
-
-
             # Insert into MySQL
             sql = text("INSERT INTO hired_employees (name, hire_datetime, department_id, job_id) VALUES (:name, :hire_datetime, :department_id, :job_id)")
             db.execute(sql, {
                 "name" : registro.name,
-                "hire_datetime" : hire_dt,
+                "hire_datetime" : registro.hire_datetime,
                 "department_id" : registro.department_id,
                 "job_id" : registro.job_id
             })
