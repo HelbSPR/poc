@@ -72,8 +72,9 @@ def cargar_datos_historicos():
             INTO TABLE poc.hired_employees
             FIELDS TERMINATED BY ',' 
             LINES TERMINATED BY '\r\n'
-            (id, name, @hire_datetime, @department_id, @job_id)
+            (id, @name, @hire_datetime, @department_id, @job_id)
             SET 
+            name = IF(@name = '', NULL, @name),
             hire_datetime = IF(@hire_datetime = '', NULL, @hire_datetime), 
             department_id = IF(@department_id = '', NULL, @department_id), 
             job_id = IF(@job_id = '', NULL, @job_id);
