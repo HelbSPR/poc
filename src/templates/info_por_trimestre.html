@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen por deparatamento y job</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h2>Resumen trimestral 2021</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>department</th>
+                <th>job</th>
+                <th>Q1</th>
+                <th>Q2</th>
+                <th>Q3</th>
+                <th>Q4</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ item.department }}</td>
+                <td>{{ item.job }}</td>
+                <td>{{ item.Q1 }}</td>
+                <td>{{ item.Q2 }}</td>
+                <td>{{ item.Q3 }}</td>
+                <td>{{ item.Q4 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
