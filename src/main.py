@@ -41,7 +41,7 @@ class RegistrosRequest(BaseModel):
 
 @app.post("/agregar-empleados")
 async def agregar_empleados(request: RegistrosRequest, db: Session = Depends(get_db)):
-    MAX_REGISTROS = 4
+    MAX_REGISTROS = 1000
     if len(request.registros) > MAX_REGISTROS:
         raise HTTPException(status_code=400, detail=f"Demasiados empleados a agregar. No se agregó ninguno. El maximo permitido es {MAX_REGISTROS}.")
 
