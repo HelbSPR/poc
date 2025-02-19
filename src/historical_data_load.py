@@ -46,10 +46,10 @@ def crear_tablas():
         )''',
         '''CREATE TABLE IF NOT EXISTS hired_employees (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            hire_datetime DATETIME NOT NULL,
-            department_id INT NOT NULL,
-            job_id INT NOT NULL,
+            name VARCHAR(255),
+            hire_datetime DATETIME,
+            department_id INT,
+            job_id INT,
             FOREIGN KEY (department_id) REFERENCES departments(id),
             FOREIGN KEY (job_id) REFERENCES jobs(id)
         )'''
@@ -72,6 +72,11 @@ def cargar_datos_historicos():
             INTO TABLE poc.hired_employees
             FIELDS TERMINATED BY ',' 
             LINES TERMINATED BY '\r\n'
+            (id, name, @hire_datetime, @department_id, @job_id)
+            SET 
+            hire_datetime = IF(@hire_datetime = '', NULL, @hire_datetime), 
+            department_id = IF(@department_id = '', NULL, @department_id), 
+            job_id = IF(@job_id = '', NULL, @job_id);
         '''
     ]
     return consultas_carga_historica
