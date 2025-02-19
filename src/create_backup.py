@@ -21,8 +21,15 @@ def backup_table(table_name, campos):
 
         engine = create_engine(f"mysql+pymysql://{user}:{password}@{host}/{database}")
         df = pd.read_sql(f"SELECT * FROM {database}.{table_name}", con=engine)
-        if table_name=="hired_employees":
+        if "hire_datetime" in df.columns:
             df["hire_datetime"] = df["hire_datetime"].astype(str)
+
+        for col in ["department_id", "job_id"]:
+            if col in df.columns:
+                df[col] = df[col].apply(lambda x: None if pd.isna(x) else int(x)).astype("Int64")
+        for col in ["name", "hire_datetime"]:
+            if col in df.columns:
+                df[col] = df[col].apply(lambda x: None if pd.isna(x) else str(x)).astype(object)
 
         engine.dispose()
 
@@ -62,7 +69,7 @@ backup_table(table_name="departments", campos=[{"name": "id", "type": "int"},
                                                {"name": "department", "type": "string"}])
                                               
 backup_table(table_name="hired_employees", campos=[{"name": "id", "type": "int"}, 
-                                                   {"name": "name", "type": "string"}, 
+                                                   {"name": "name", "type": ["null", "string"]}, 
                                                    {"name": "hire_datetime", "type": "string"},
-                                                   {"name": "department_id", "type": "int"},
-                                                   {"name": "job_id", "type": "int"}])
+                                                   {"name": "department_id", "type": ["null", "int"]},
+                                                   {"name": "job_id", "type": ["null", "int"]}])
