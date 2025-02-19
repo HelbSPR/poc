@@ -40,10 +40,16 @@ def crear_tablas():
             id INT AUTO_INCREMENT PRIMARY KEY,
             department VARCHAR(255) NOT NULL
         )''',
+
+        '''ALTER TABLE departments AUTO_INCREMENT = 1''',
+
         '''CREATE TABLE IF NOT EXISTS jobs (
             id INT AUTO_INCREMENT PRIMARY KEY,
             job VARCHAR(255) NOT NULL
         )''',
+
+        '''ALTER TABLE jobs AUTO_INCREMENT = 1''',
+
         '''CREATE TABLE IF NOT EXISTS hired_employees (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255),
@@ -52,7 +58,9 @@ def crear_tablas():
             job_id INT,
             FOREIGN KEY (department_id) REFERENCES departments(id),
             FOREIGN KEY (job_id) REFERENCES jobs(id)
-        )'''
+        )''',
+
+        '''ALTER TABLE hired_employees AUTO_INCREMENT = 1'''
     ]
     return consultas_creacion_tablas
 
